@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div  style="width: 50%;">
+    <!--action:请求地址-->
+        <fieldset>
+            <legend>注册</legend>
+            用户名:<input id="name" type="text"/><br>
+            密码:<input id="pwd" type="password"/><br>
+            邮箱:<input id="email" type="text"/><br>
+            电话:<input id="phone" type="text"/><br>
+            <button onclick="register()">注册</button>
+        </fieldset>
+</div>
+<script>
+    function register() {
+        let name = document.getElementById("name").value;
+        let pwd = document.getElementById("pwd").value;
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+        axios.get("/user/register",{
+            params:{
+                "name":name,
+                "password":pwd,
+                "email":email,
+                "phone":phone
+            }
+        }).then(res=>{
+            if (res.data.code == 20000){
+                window.open("/user/registerSuccess");
+            } else {
+                alert(res.data.message)
+            }
+        })
+    }
+</script>
+</body>
+</html>

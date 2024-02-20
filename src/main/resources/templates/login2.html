@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+<div style="width: 50%;">
+    <!--action:请求地址-->
+    <fieldset>
+        <legend>登录</legend>
+        用户名:<input id="name" type="text"/><br>
+        密码:<input id="pwd" type="password"/><br>
+        <button onclick="login()">登录</button>
+        <input type="button" onclick='location.href=("registerHTML")' value="注册">
+    </fieldset>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    //点击登录触发事件
+    function login() {
+        let userName = document.getElementById("name").value;
+        let pwd = document.getElementById("pwd").value;
+        let url = "/user/login"
+        //异步请求
+        axios.get(url, {
+            params: {
+                "name": userName,
+                "password": pwd
+            }
+        }).then(res => {
+            //接收服务端响应的数据
+            if (res.data.code == 20000) {
+                //打开一个新的页面
+                //window.open("/user/index")
+                window.location.href = "/user/index"
+            } else {
+                alert(res.data.message)
+            }
+        })
+    }
+</script>
+</body>
+</html>
